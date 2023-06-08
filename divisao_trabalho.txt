@@ -1,0 +1,19 @@
+Banco de dados (postgres)
+- Modelo de entidade e relacionamento
+- Modelo relacional 
+- código em sql da criação do BD 
+
+Back-end (Java)
+- Diagrama de classe
+- levantamento de requisitos funcionais | histórias do usuário | critérios de aceitação
+- Diagrama de caso de uso
+- Prototipagem
+- Canvas MVC
+- código da camada de modelo (Spring boot)
+- código da camada de serviço (Spring boot)
+- código da camada de controller (Spring boot)
+
+Front-end
+- código em html/CSS
+
+ 
