@@ -348,4 +348,31 @@ public class LivroControllerTest {
 
     }
 
+    @DisplayName("Teste de alteração de preço para valor negativo informa erro")
+    @Test
+    public void test_deve_informar_erro_para_preco_venda_negativo() throws Exception {
+
+        // Arrange
+        when(repository.getReferenceById(1L)).thenReturn(
+                new Livro(
+                        1L,
+                        "9786500019506",
+                        "Engenharia de Software Moderna",
+                        "Marco Tulio Valente",
+                        "Independente",
+                        Categoria.INFORMATICA,
+                        new BigDecimal("100.90")
+                )
+        );
+
+        // Arrange/Act
+        this.mockMvc.perform(
+                        put("/atualizar_preco_venda")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("{\"id\": 1, \"precoVenda\": -0.01}")
+                )
+                // Assert
+                .andExpect(status().is4xxClientError());
+    }
+
 }
