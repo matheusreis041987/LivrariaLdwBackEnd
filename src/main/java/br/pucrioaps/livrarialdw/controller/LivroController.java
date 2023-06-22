@@ -1,7 +1,9 @@
 package br.pucrioaps.livrarialdw.controller;
 
 import br.pucrioaps.livrarialdw.dto.CadastroDeLivroDTO;
+import br.pucrioaps.livrarialdw.dto.PesquisaLivroDTO;
 import br.pucrioaps.livrarialdw.dto.PrecoVendaLivroDTO;
+import br.pucrioaps.livrarialdw.model.entity.Livro;
 import br.pucrioaps.livrarialdw.service.LivroService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +27,15 @@ public class LivroController {
     }
 
     @GetMapping("/livros")
-    public ResponseEntity listar(){
-        var dto = this.service.listar();
+    public ResponseEntity listar(
+            @RequestParam(value = "isbn", required = false) String isbn,
+            @RequestParam(value = "titulo", required = false) String titulo,
+            @RequestParam(value = "autoria", required = false) String autoria,
+            @RequestParam(value = "editora", required = false) String editora,
+            @RequestParam(value = "categoria", required = false) String categoria
+    ){
+        PesquisaLivroDTO paramLivro = new PesquisaLivroDTO(isbn, titulo, autoria, editora, categoria);
+        var dto = this.service.listar(paramLivro);
         return ResponseEntity.ok(dto);
     }
 

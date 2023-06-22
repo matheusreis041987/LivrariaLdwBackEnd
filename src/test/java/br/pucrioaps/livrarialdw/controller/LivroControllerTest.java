@@ -1,6 +1,7 @@
 package br.pucrioaps.livrarialdw.controller;
 
 import br.pucrioaps.livrarialdw.dto.CabecalhoLivroDTO;
+import br.pucrioaps.livrarialdw.dto.PesquisaLivroDTO;
 import br.pucrioaps.livrarialdw.infra.exception.TratadorDeErros;
 import br.pucrioaps.livrarialdw.model.entity.Categoria;
 import br.pucrioaps.livrarialdw.model.entity.Livro;
@@ -32,6 +33,8 @@ import static org.mockito.Mockito.when;
 @WebMvcTest(LivroController.class)
 public class LivroControllerTest {
 
+    private PesquisaLivroDTO pesquisaSemFiltro =
+            new PesquisaLivroDTO(null, null, null, null, null);
     @Autowired
     private MockMvc mockMvc;
 
@@ -108,7 +111,7 @@ public class LivroControllerTest {
     @Test
     public void test_deve_listar_unico_livro_em_repositorio() throws Exception {
         // Arrange
-        when(service.listar()).thenReturn(
+        when(service.listar(pesquisaSemFiltro)).thenReturn(
                 List.of(new CabecalhoLivroDTO(
                         1L,
                         "Engenharia de Software Moderna",
@@ -142,7 +145,7 @@ public class LivroControllerTest {
     @Test
     public void test_deve_retornar_lista_vazia_se_nao_ha_livro_em_repositorio() throws Exception {
         // Arrange
-        when(service.listar()).thenReturn(
+        when(service.listar(pesquisaSemFiltro)).thenReturn(
                 List.of()
         );
 
@@ -160,7 +163,9 @@ public class LivroControllerTest {
     @Test
     public void test_deve_listar_livros_em_repositorio() throws Exception {
         // Arrange
-        when(service.listar()).thenReturn(
+        when(service
+                .listar(new PesquisaLivroDTO(null, null, null,
+                        null, null))).thenReturn(
                 List.of(new CabecalhoLivroDTO(
                         1L,
                         "Engenharia de Software Moderna",
@@ -373,6 +378,78 @@ public class LivroControllerTest {
                 )
                 // Assert
                 .andExpect(status().is4xxClientError());
+    }
+
+    @DisplayName("Teste de listagem de livros com filtro de categoria")
+    @Test
+    public void test_deve_listar_livro_com_filtro_de_categoria() throws Exception {
+        // Arrange
+        when(service.listar(
+                new PesquisaLivroDTO(null, null, null, null, "INFORMATICA")
+        )).thenReturn(
+                List.of(new CabecalhoLivroDTO(
+                        1L,
+                        "Engenharia de Software Moderna",
+                        "Marco Tulio Valente",
+                        "INFORMATICA",
+                        new BigDecimal("100.90")
+                ))
+        );
+
+
+        // Act
+        this.mockMvc.perform(get("/livros").param("categoria", "INFORMATICA"))
+                // Assert
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$",
+                        Matchers.hasSize(1)))
+                .andExpect(jsonPath("$[0].id",
+                        Matchers.is(1)))
+                .andExpect(jsonPath("$[0].titulo",
+                        Matchers.is("Engenharia de Software Moderna")))
+                .andExpect(jsonPath("$[0].autoria",
+                        Matchers.is("Marco Tulio Valente")))
+                .andExpect(jsonPath("$[0].categoria",
+                        Matchers.is("INFORMATICA")))
+                .andExpect(jsonPath("$[0].precoVenda",
+                        Matchers.is(100.90)));
+
+    }
+
+    @DisplayName("Teste de listagem de livros com filtro de isbn")
+    @Test
+    public void test_deve_listar_livro_com_filtro_de_isbn() throws Exception {
+        // Arrange
+        when(service.listar(
+                new PesquisaLivroDTO("123", null, null, null, null)
+        )).thenReturn(
+                List.of(new CabecalhoLivroDTO(
+                        1L,
+                        "Engenharia de Software Moderna",
+                        "Marco Tulio Valente",
+                        "INFORMATICA",
+                        new BigDecimal("100.90")
+                ))
+        );
+
+
+        // Act
+        this.mockMvc.perform(get("/livros").param("isbn", "123"))
+                // Assert
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$",
+                        Matchers.hasSize(1)))
+                .andExpect(jsonPath("$[0].id",
+                        Matchers.is(1)))
+                .andExpect(jsonPath("$[0].titulo",
+                        Matchers.is("Engenharia de Software Moderna")))
+                .andExpect(jsonPath("$[0].autoria",
+                        Matchers.is("Marco Tulio Valente")))
+                .andExpect(jsonPath("$[0].categoria",
+                        Matchers.is("INFORMATICA")))
+                .andExpect(jsonPath("$[0].precoVenda",
+                        Matchers.is(100.90)));
+
     }
 
 }
