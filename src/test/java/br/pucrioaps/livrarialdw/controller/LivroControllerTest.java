@@ -130,4 +130,22 @@ public class LivroControllerTest {
                         Matchers.is(100.90)));
 
     }
+
+    @DisplayName("Teste de listagem de livros para repositorio vazio")
+    @Test
+    public void test_deve_retornar_lista_vazia_se_nao_ha_livro_em_repositorio() throws Exception {
+        // Arrange
+        when(service.listar()).thenReturn(
+                List.of()
+        );
+
+
+        // Act
+        this.mockMvc.perform(get("/livros"))
+                // Assert
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$",
+                        Matchers.hasSize(0)));
+
+    }
 }
