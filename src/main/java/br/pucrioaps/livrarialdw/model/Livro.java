@@ -2,12 +2,14 @@ package br.pucrioaps.livrarialdw.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
 @Table(name="livro")
 @Entity(name = "Livro")
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Livro {
