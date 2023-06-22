@@ -1,5 +1,6 @@
 package br.pucrioaps.livrarialdw.controller;
 
+import br.pucrioaps.livrarialdw.dto.CabecalhoLivroDTO;
 import br.pucrioaps.livrarialdw.infra.exception.TratadorDeErros;
 import br.pucrioaps.livrarialdw.service.LivroService;
 import br.pucrioaps.livrarialdw.dto.DetalheDeLivroDTO;
@@ -10,11 +11,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -89,6 +94,40 @@ public class LivroControllerTest {
                 // Assert
                 .andExpect(status().isNotFound());
 
+
+    }
+
+    @DisplayName("Teste de listagem de livros para repositorio com apenas um")
+    @Test
+    public void test_deve_listar_unico_livro_em_repositorio() throws Exception {
+        // Arrange
+        when(service.listar()).thenReturn(
+                List.of(new CabecalhoLivroDTO(
+                        1L,
+                        "Engenharia de Software Moderna",
+                        "Marco Tulio Valente",
+                        "INFORMATICA",
+                        new BigDecimal("100.90")
+                        ))
+        );
+
+
+        // Act
+        this.mockMvc.perform(get("/livros"))
+                // Assert
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$",
+                        Matchers.hasSize(1)))
+                .andExpect(jsonPath("$[0].id",
+                        Matchers.is(1)))
+                .andExpect(jsonPath("$[0].titulo",
+                        Matchers.is("Engenharia de Software Moderna")))
+                .andExpect(jsonPath("$[0].autoria",
+                        Matchers.is("Marco Tulio Valente")))
+                .andExpect(jsonPath("$[0].categoria",
+                        Matchers.is("INFORMATICA")))
+                .andExpect(jsonPath("$[0].precoVenda",
+                        Matchers.is(100.90)));
 
     }
 }
