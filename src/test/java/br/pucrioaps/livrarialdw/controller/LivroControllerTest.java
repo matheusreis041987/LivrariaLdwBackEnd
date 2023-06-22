@@ -148,4 +148,55 @@ public class LivroControllerTest {
                         Matchers.hasSize(0)));
 
     }
+
+    @DisplayName("Teste de listagem de livros para repositorio com mais de um")
+    @Test
+    public void test_deve_listar_livros_em_repositorio() throws Exception {
+        // Arrange
+        when(service.listar()).thenReturn(
+                List.of(new CabecalhoLivroDTO(
+                        1L,
+                        "Engenharia de Software Moderna",
+                        "Marco Tulio Valente",
+                        "INFORMATICA",
+                        new BigDecimal("100.90")
+                ),
+                        new CabecalhoLivroDTO(
+                                2L,
+                                "Entrega Contínua",
+                                "Jez Humble, David Farley",
+                                "INFORMATICA",
+                                new BigDecimal("208.00")
+                        ))
+        );
+
+
+        // Act
+        this.mockMvc.perform(get("/livros"))
+                // Assert
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$",
+                        Matchers.hasSize(2)))
+                .andExpect(jsonPath("$[0].id",
+                        Matchers.is(1)))
+                .andExpect(jsonPath("$[0].titulo",
+                        Matchers.is("Engenharia de Software Moderna")))
+                .andExpect(jsonPath("$[0].autoria",
+                        Matchers.is("Marco Tulio Valente")))
+                .andExpect(jsonPath("$[0].categoria",
+                        Matchers.is("INFORMATICA")))
+                .andExpect(jsonPath("$[0].precoVenda",
+                        Matchers.is(100.90)))
+                .andExpect(jsonPath("$[1].id",
+                        Matchers.is(2)))
+                .andExpect(jsonPath("$[1].titulo",
+                        Matchers.is("Entrega Contínua")))
+                .andExpect(jsonPath("$[1].autoria",
+                        Matchers.is("Jez Humble, David Farley")))
+                .andExpect(jsonPath("$[1].categoria",
+                        Matchers.is("INFORMATICA")))
+                .andExpect(jsonPath("$[1].precoVenda",
+                        Matchers.is(208.00)));
+
+    }
 }
