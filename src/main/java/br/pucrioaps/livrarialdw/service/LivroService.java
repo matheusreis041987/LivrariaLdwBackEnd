@@ -1,12 +1,10 @@
 package br.pucrioaps.livrarialdw.service;
 
-import br.pucrioaps.livrarialdw.dto.CabecalhoLivroDTO;
-import br.pucrioaps.livrarialdw.dto.CadastroDeLivroDTO;
-import br.pucrioaps.livrarialdw.dto.DetalheDeLivroDTO;
-import br.pucrioaps.livrarialdw.dto.PrecoVendaLivroDTO;
+import br.pucrioaps.livrarialdw.dto.*;
 import br.pucrioaps.livrarialdw.model.entity.Livro;
 import br.pucrioaps.livrarialdw.model.repository.LivroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,10 +18,12 @@ public class LivroService {
         return new DetalheDeLivroDTO(livro);
     }
 
-    public List<CabecalhoLivroDTO> listar() {
-        List<Livro> livros = repository.findAll();
+    public List<CabecalhoLivroDTO> listar(PesquisaLivroDTO pesquisaLivroDTO) {
+        Livro livro = pesquisaLivroDTO.toLivro();
+        Example<Livro> example = Example.of(livro);
+        List<Livro> livros = repository.findAll(example);
         return livros.stream().map(
-                livro -> new CabecalhoLivroDTO(livro)
+                CabecalhoLivroDTO::new
         ).toList();
     }
 
