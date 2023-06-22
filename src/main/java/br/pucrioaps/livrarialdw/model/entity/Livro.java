@@ -38,6 +38,21 @@ public class Livro {
         this.editora = editora;
         this.categoria = categoria;
         this.precoVenda = precoVenda;
+    }
 
+    public Livro(String isbn, String titulo, String autoria, String editora,
+                 Categoria categoria) {
+        this.isbn = isbn;
+        this.titulo = titulo;
+        this.autoria = autoria;
+        this.editora = editora;
+        this.categoria = categoria;
+    }
+
+    public Livro(String isbn, String titulo, String autoria, String editora) {
+        this.isbn = isbn;
+        this.titulo = titulo;
+        this.autoria = autoria;
+        this.editora = editora;
     }
 }
