@@ -1,6 +1,7 @@
 package br.pucrioaps.livrarialdw.infra.exception;
 
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -18,6 +19,11 @@ public class TratadorDeErros {
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity tratarErro400(IllegalArgumentException exception){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity tratarErro409(DataIntegrityViolationException exception){
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.getMessage());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
