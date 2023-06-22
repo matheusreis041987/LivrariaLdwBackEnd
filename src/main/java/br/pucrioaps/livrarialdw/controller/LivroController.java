@@ -20,4 +20,10 @@ public class LivroController {
         var dto = this.service.detalhar(id);
         return ResponseEntity.ok(dto);
     }
+
+    @GetMapping("/livros")
+    public ResponseEntity listar(){
+        var dto = this.service.listar();
+        return ResponseEntity.ok(dto);
+    }
 }
