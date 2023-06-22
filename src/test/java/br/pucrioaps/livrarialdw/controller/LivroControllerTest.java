@@ -7,6 +7,7 @@ import br.pucrioaps.livrarialdw.model.entity.Livro;
 import br.pucrioaps.livrarialdw.model.repository.LivroRepository;
 import br.pucrioaps.livrarialdw.service.LivroService;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -325,6 +326,25 @@ public class LivroControllerTest {
                 .andExpect(jsonPath("$.precoVenda",
                         Matchers.is(102.00)));
 
+    }
+
+    @DisplayName("Teste de alteração de preço de venda para id inválido")
+    @Test
+    public void test_deve_informar_erro_requisicao_se_id_invalido() throws Exception{
+
+        // Arrange
+        when(repository.getReferenceById(2L)).thenThrow(
+                EntityNotFoundException.class
+        );
+
+        // Arrange/Act
+        this.mockMvc.perform(
+                        put("/atualizar_preco_venda")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("{\"id\": 2, \"precoVenda\": 102.00}")
+                )
+                // Assert
+                .andExpect(status().isNotFound());
 
     }
 
