@@ -1,6 +1,7 @@
 package br.pucrioaps.livrarialdw.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,7 @@ public class Livro {
     private Categoria categoria;
     @Column(name = "preco_venda")
     @Setter
+    @Positive
     private BigDecimal precoVenda;
 
     public Livro(String isbn, String titulo, String autoria, String editora,
