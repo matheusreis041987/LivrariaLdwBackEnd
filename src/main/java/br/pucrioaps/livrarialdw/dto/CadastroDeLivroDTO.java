@@ -13,7 +13,7 @@ public record CadastroDeLivroDTO(
         String titulo,
         @NotBlank(message = "autoria é obrigatória")
         String autoria,
-        @NotBlank(message = "autoria é obrigatória")
+        @NotBlank(message = "editora é obrigatória")
         String editora,
         @NotBlank(message = "informar categoria válida")
         String categoria,
