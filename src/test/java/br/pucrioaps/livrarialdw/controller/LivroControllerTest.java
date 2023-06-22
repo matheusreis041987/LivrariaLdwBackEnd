@@ -1,13 +1,11 @@
 package br.pucrioaps.livrarialdw.controller;
 
 import br.pucrioaps.livrarialdw.dto.CabecalhoLivroDTO;
-import br.pucrioaps.livrarialdw.dto.CadastroDeLivroDTO;
 import br.pucrioaps.livrarialdw.infra.exception.TratadorDeErros;
 import br.pucrioaps.livrarialdw.model.entity.Categoria;
 import br.pucrioaps.livrarialdw.model.entity.Livro;
 import br.pucrioaps.livrarialdw.model.repository.LivroRepository;
 import br.pucrioaps.livrarialdw.service.LivroService;
-import br.pucrioaps.livrarialdw.dto.DetalheDeLivroDTO;
 
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
@@ -23,6 +21,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -240,7 +239,7 @@ public class LivroControllerTest {
             // Assert
                 .andExpect(status().isCreated())
                 .andExpect(header().exists("Location"))
-                .andExpect(header().string("Location", Matchers.containsString("livros/1")));
+                .andExpect(header().string("Location", containsString("livros/1")));
 
 
     }
@@ -266,6 +265,28 @@ public class LivroControllerTest {
                 // Assert
                 .andExpect(status().is4xxClientError());
 
+
+    }
+
+    @DisplayName("Teste de inclusão de livro sem titulo informa erro do cliente na requisição")
+    @Test
+    public void test_nao_deve_criar_livro_se_titulo_nao_informado() throws Exception{
+        // Arrange
+
+
+        // Arrange/Act
+        this.mockMvc.perform(
+                        post("/cadastrar_livro")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(
+                                        "{\"isbn\": \"9786500019506\", " +
+                                                " \"autoria\": \"Marco Tulio Valente\", " +
+                                                "\"editora\": \"Independente\", " +
+                                                "\"categoria\": \"INFORMATICA\"," +
+                                                " \"precoVenda\": 100.90}")
+                )
+                // Assert
+                .andExpect(status().is4xxClientError());
 
     }
 
