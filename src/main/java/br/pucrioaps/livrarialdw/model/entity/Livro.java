@@ -1,4 +1,4 @@
-package br.pucrioaps.livrarialdw.model;
+package br.pucrioaps.livrarialdw.model.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -23,6 +23,6 @@ public class Livro {
     private String editora;
     @Enumerated(EnumType.STRING)
     private Categoria categoria;
-    @Column(name = "in_referencia")
+    @Column(name = "preco_venda")
     private BigDecimal precoVenda;
 }

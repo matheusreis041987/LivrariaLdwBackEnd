@@ -1,5 +1,6 @@
 package br.pucrioaps.livrarialdw.controller;
 
+import br.pucrioaps.livrarialdw.infra.exception.TratadorDeErros;
 import br.pucrioaps.livrarialdw.service.LivroService;
 import br.pucrioaps.livrarialdw.dto.DetalheDeLivroDTO;
 
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.math.BigDecimal;
 
@@ -59,6 +61,34 @@ public class LivroControllerTest {
                         Matchers.is("INFORMATICA")))
                 .andExpect(jsonPath("$.precoVenda",
                         Matchers.is(100.90)));
+
+    }
+
+    @DisplayName("Teste de detalhamento de livro para Id inexistente na API")
+    @Test
+    public void test_nao_deve_detalhar_livro_para_id_invalido() throws Exception {
+        // Arrange
+        when(service.detalhar(1L)).thenReturn(
+                new DetalheDeLivroDTO(
+                        1L,
+                        "9786500019506",
+                        "Engenharia de Software Moderna",
+                        "Marco Tulio Valente",
+                        "Independente",
+                        "INFORMATICA",
+                        new BigDecimal("100.90")
+                )
+        );
+        this.mockMvc = MockMvcBuilders.standaloneSetup(
+                this.mockMvc).setControllerAdvice(
+                TratadorDeErros.class).build();
+
+        // Act
+        this.mockMvc.perform(get("/livros/2"))
+
+                // Assert
+                .andExpect(status().isNotFound());
+
 
     }
 }

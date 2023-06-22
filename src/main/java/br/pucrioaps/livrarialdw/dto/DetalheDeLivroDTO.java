@@ -1,6 +1,6 @@
 package br.pucrioaps.livrarialdw.dto;
 
-import br.pucrioaps.livrarialdw.model.Livro;
+import br.pucrioaps.livrarialdw.model.entity.Livro;
 
 import java.math.BigDecimal;
 
