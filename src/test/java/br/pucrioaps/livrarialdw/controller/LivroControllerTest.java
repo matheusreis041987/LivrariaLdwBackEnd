@@ -23,8 +23,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import static org.mockito.Mockito.when;
@@ -61,12 +60,12 @@ public class LivroControllerTest {
         this.mockMvc.perform(get("/livros/1"))
                 // Assert
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.isbn",
-                        Matchers.is("9786500019506")))
-                .andExpect(jsonPath("$.titulo",
-                        Matchers.is("Engenharia de Software Moderna")))
-                .andExpect(jsonPath("$.autoria",
-                        Matchers.is("Marco Tulio Valente")))
+                    .andExpect(jsonPath("$.isbn",
+                            Matchers.is("9786500019506")))
+                    .andExpect(jsonPath("$.titulo",
+                            Matchers.is("Engenharia de Software Moderna")))
+                    .andExpect(jsonPath("$.autoria",
+                            Matchers.is("Marco Tulio Valente")))
                 .andExpect(jsonPath("$.editora",
                         Matchers.is("Independente")))
                 .andExpect(jsonPath("$.categoria",
@@ -287,6 +286,45 @@ public class LivroControllerTest {
                 )
                 // Assert
                 .andExpect(status().is4xxClientError());
+
+    }
+
+    @DisplayName("Teste de alteração de preço de venda para id válido")
+    @Test
+    public void test_deve_atualizar_preco_de_venda_se_id_valido() throws Exception{
+
+        // Arrange
+        when(repository.getReferenceById(1L)).thenReturn(
+                new Livro(
+                        1L,
+                        "9786500019506",
+                        "Engenharia de Software Moderna",
+                        "Marco Tulio Valente",
+                        "Independente",
+                        Categoria.INFORMATICA,
+                        new BigDecimal("100.90")
+                )
+        );
+
+        // Arrange/Act
+        this.mockMvc.perform(
+                        put("/atualizar_preco_venda")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("{\"id\": 1, \"precoVenda\": 102.00}")
+                )
+                // Assert
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id",
+                        Matchers.is(1)))
+                .andExpect(jsonPath("$.titulo",
+                        Matchers.is("Engenharia de Software Moderna")))
+                .andExpect(jsonPath("$.autoria",
+                        Matchers.is("Marco Tulio Valente")))
+                .andExpect(jsonPath("$.categoria",
+                        Matchers.is("INFORMATICA")))
+                .andExpect(jsonPath("$.precoVenda",
+                        Matchers.is(102.00)));
+
 
     }
 

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 
@@ -24,6 +25,7 @@ public class Livro {
     @Enumerated(EnumType.STRING)
     private Categoria categoria;
     @Column(name = "preco_venda")
+    @Setter
     private BigDecimal precoVenda;
 
     public Livro(String isbn, String titulo, String autoria, String editora,
