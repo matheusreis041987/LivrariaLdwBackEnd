@@ -25,4 +25,15 @@ public class Livro {
     private Categoria categoria;
     @Column(name = "preco_venda")
     private BigDecimal precoVenda;
+
+    public Livro(String isbn, String titulo, String autoria, String editora,
+                 Categoria categoria, BigDecimal precoVenda) {
+        this.isbn = isbn;
+        this.titulo = titulo;
+        this.autoria = autoria;
+        this.editora = editora;
+        this.categoria = categoria;
+        this.precoVenda = precoVenda;
+
+    }
 }
