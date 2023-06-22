@@ -3,7 +3,9 @@ package br.pucrioaps.livrarialdw.controller;
 import br.pucrioaps.livrarialdw.dto.CabecalhoLivroDTO;
 import br.pucrioaps.livrarialdw.dto.CadastroDeLivroDTO;
 import br.pucrioaps.livrarialdw.infra.exception.TratadorDeErros;
+import br.pucrioaps.livrarialdw.model.entity.Categoria;
 import br.pucrioaps.livrarialdw.model.entity.Livro;
+import br.pucrioaps.livrarialdw.model.repository.LivroRepository;
 import br.pucrioaps.livrarialdw.service.LivroService;
 import br.pucrioaps.livrarialdw.dto.DetalheDeLivroDTO;
 
@@ -13,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -21,7 +24,6 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -34,21 +36,24 @@ public class LivroControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @SpyBean
     private LivroService service;
+
+    @MockBean
+    private LivroRepository repository;
 
     @DisplayName("Teste de detalhamento de livro para id válido na API")
     @Test
     public void test_deve_detalhar_livro_para_id_valido() throws Exception {
         // Arrange
-        when(service.detalhar(1L)).thenReturn(
-                new DetalheDeLivroDTO(
+        when(repository.getReferenceById(1L)).thenReturn(
+                new Livro(
                         1L,
                         "9786500019506",
                         "Engenharia de Software Moderna",
                         "Marco Tulio Valente",
                         "Independente",
-                        "INFORMATICA",
+                        Categoria.INFORMATICA,
                         new BigDecimal("100.90")
                 )
         );
@@ -76,14 +81,14 @@ public class LivroControllerTest {
     @Test
     public void test_nao_deve_detalhar_livro_para_id_invalido() throws Exception {
         // Arrange
-        when(service.detalhar(1L)).thenReturn(
-                new DetalheDeLivroDTO(
+        when(repository.getReferenceById(1L)).thenReturn(
+                new Livro(
                         1L,
                         "9786500019506",
                         "Engenharia de Software Moderna",
                         "Marco Tulio Valente",
                         "Independente",
-                        "INFORMATICA",
+                        Categoria.INFORMATICA,
                         new BigDecimal("100.90")
                 )
         );
@@ -208,14 +213,14 @@ public class LivroControllerTest {
     public void test_deve_criar_livro_se_dados_informados_validos() throws Exception{
 
         // Arrange
-        when(service.salvar(any(CadastroDeLivroDTO.class))).thenReturn(
-                new DetalheDeLivroDTO(
+        when(repository.save(any(Livro.class))).thenReturn(
+                new Livro(
                         1L,
                         "9786500019506",
                         "Engenharia de Software Moderna",
                         "Marco Tulio Valente",
                         "Independente",
-                        "INFORMATICA",
+                        Categoria.INFORMATICA,
                         new BigDecimal("100.90")
                 )
         );
@@ -239,4 +244,29 @@ public class LivroControllerTest {
 
 
     }
+
+    @DisplayName("Teste de inclusão de livro com categoria inválida")
+    @Test
+    public void test_nao_deve_criar_livro_se_categoria_invalida() throws Exception{
+        // Arrange
+
+
+        // Arrange/Act
+        this.mockMvc.perform(
+                        post("/cadastrar_livro")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(
+                                        "{\"isbn\": \"9786500019506\", " +
+                                                "\"titulo\": \"Engenharia de Software Moderna\"," +
+                                                " \"autoria\": \"Marco Tulio Valente\", " +
+                                                "\"editora\": \"Independente\", " +
+                                                "\"categoria\": \"INEXISTENTE\"," +
+                                                " \"precoVenda\": 100.90}")
+                )
+                // Assert
+                .andExpect(status().is4xxClientError());
+
+
+    }
+
 }
