@@ -1,7 +1,7 @@
 package br.pucrioaps.livrarialdw.controller;
 
 import br.pucrioaps.livrarialdw.dto.CadastroDeLivroDTO;
-import br.pucrioaps.livrarialdw.dto.DetalheDeLivroDTO;
+import br.pucrioaps.livrarialdw.dto.PrecoVendaLivroDTO;
 import br.pucrioaps.livrarialdw.service.LivroService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,5 +39,15 @@ public class LivroController {
         var resposta = this.service.salvar(dto);
         var uri = uriBuilder.path("/livros/{id}").buildAndExpand(resposta.id()).toUri();
         return ResponseEntity.created(uri).body(resposta);
+    }
+
+    @PutMapping("/atualizar_preco_venda")
+    @Transactional
+    public ResponseEntity atualizar(
+            @RequestBody @Valid PrecoVendaLivroDTO dto
+            ){
+        var resposta = this.service.atualizar(dto);
+        return ResponseEntity.ok(resposta);
+
     }
 }
