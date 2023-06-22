@@ -1,6 +1,7 @@
 package br.pucrioaps.livrarialdw.service;
 
 import br.pucrioaps.livrarialdw.dto.CabecalhoLivroDTO;
+import br.pucrioaps.livrarialdw.dto.CadastroDeLivroDTO;
 import br.pucrioaps.livrarialdw.dto.DetalheDeLivroDTO;
 import br.pucrioaps.livrarialdw.model.entity.Livro;
 import br.pucrioaps.livrarialdw.model.repository.LivroRepository;
@@ -23,5 +24,11 @@ public class LivroService {
         return livros.stream().map(
                 livro -> new CabecalhoLivroDTO(livro)
         ).toList();
+    }
+
+    public DetalheDeLivroDTO salvar(CadastroDeLivroDTO dados) {
+        Livro livro = dados.toLivro();
+        this.repository.save(livro);
+        return new DetalheDeLivroDTO(livro);
     }
 }
