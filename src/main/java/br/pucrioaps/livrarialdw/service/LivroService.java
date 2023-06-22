@@ -27,8 +27,8 @@ public class LivroService {
     }
 
     public DetalheDeLivroDTO salvar(CadastroDeLivroDTO dados) {
-        Livro livro = dados.toLivro();
-        this.repository.save(livro);
-        return new DetalheDeLivroDTO(livro);
+        Livro livroASalvar = dados.toLivro();
+        Livro livroSalvo = this.repository.save(livroASalvar);
+        return new DetalheDeLivroDTO(livroSalvo);
     }
 }

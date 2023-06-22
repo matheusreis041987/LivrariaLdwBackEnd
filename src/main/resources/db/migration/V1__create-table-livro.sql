@@ -1,5 +1,5 @@
 create table livro(
-    id bigint primary key,
+    id bigint primary key auto_increment,
     isbn varchar(13) not null,
     titulo varchar(200) not null,
     autoria varchar(200) not null,
