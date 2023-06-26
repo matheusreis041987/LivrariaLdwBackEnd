@@ -1,0 +1,8 @@
+package br.pucrioaps.livrarialdw.model.entity;
+
+public enum Categoria {
+    ADMINISTRACAO, BIOLOGIA, CIENCIA_POLITICA, CIENCIAS_EXATAS,
+    CONTABILIDADE, DIDATICO, ECONOMIA, ENGENHARIA, FILOSOFIA,
+    INFORMATICA, PSICOLOGIA
+
+}
