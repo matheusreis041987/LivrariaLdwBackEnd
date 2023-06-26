@@ -1,5 +1,10 @@
 # LivrariaLdw
 
+
+![example workflow](https://github.com/matheusreis041987/LivrariaLdwBackEnd/actions/workflows/maven.yml/badge.svg)
+![framework_back](https://img.shields.io/badge/Spring_Boot-F2F4F9?style=for-the-badge&logo=spring-boot)
+![server_ci](https://img.shields.io/badge/Github%20Actions-282a2e?style=for-the-badge&logo=githubactions&logoColor=367cfe)
+
 Repositório para o backend do trabalho a ser entregue na disciplina Laboratório de Desenvolvimento Web, do curso Análise e Projeto de Sistemas, da PUC-RJ.
 
 ## Escopo inicial
