@@ -7,6 +7,12 @@
 
 Repositório para o backend do trabalho a ser entregue na disciplina Laboratório de Desenvolvimento Web, do curso Análise e Projeto de Sistemas, da PUC-RJ.
 
+## Modelagem do domínio
+
+O Modelo Entidade-Relacionamento do domínio completo se dá conforme a imagem abaixo.
+
+![Diagrama Entidade Relacionamento](https://github.com/matheusreis041987/LivrariaLdwBackEnd/blob/main/docs/modelo_entidade_relacionamento/DER%20Livraria%20LDW.png)
+
 ## Escopo inicial
 
 Como entrega inicial da aplicação, desenvolveremos o back-end para a entidade Livro, com 4 APIs a serem consumidas pelo
