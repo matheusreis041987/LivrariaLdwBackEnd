@@ -16,7 +16,8 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class Livro {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "pk_sequence", sequenceName = "livro_identificador", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
     private Long id;
 
     private String isbn;
