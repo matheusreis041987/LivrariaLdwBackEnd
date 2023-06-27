@@ -1,0 +1,4 @@
+# substituir {username} pelo nome de usuário da aplicação no bd local
+CREATE SCHEMA IF NOT EXISTS livraria
+GRANT USAGE, CREATE ON SCHEMA livraria TO {username};
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA livraria TO {username};
