@@ -1,5 +1,20 @@
-# LivrariaLdw
+LivrariaLdw
+===========
 
+<!-- TOC -->
+* [LivrariaLdw](#livrarialdw)
+* [Descrição](#descrição)
+* [Modelagem do domínio](#modelagem-do-domínio)
+* [Escopo inicial](#escopo-inicial)
+* [APIs](#apis)
+  * [APIs de Livro](#apis-de-livro)
+    * [`/cadastrar_livro`](#cadastrarlivro)
+    * [`/atualizar_preco_de_venda`](#atualizarprecodevenda)
+    * [`/livros`](#livros)
+    * [`/livros/{id}`](#livrosid)
+<!-- TOC -->
+
+# Descrição
 
 ![example workflow](https://github.com/matheusreis041987/LivrariaLdwBackEnd/actions/workflows/maven.yml/badge.svg)
 ![framework_back](https://img.shields.io/badge/Spring_Boot-F2F4F9?style=for-the-badge&logo=spring-boot)
@@ -7,13 +22,13 @@
 
 Repositório para o backend do trabalho a ser entregue na disciplina Laboratório de Desenvolvimento Web, do curso Análise e Projeto de Sistemas, da PUC-RJ.
 
-## Modelagem do domínio
+# Modelagem do domínio
 
 O Modelo Entidade-Relacionamento do domínio completo se dá conforme a imagem abaixo.
 
 ![Diagrama Entidade Relacionamento](https://github.com/matheusreis041987/LivrariaLdwBackEnd/blob/main/docs/modelo_entidade_relacionamento/DER%20Livraria%20LDW.png)
 
-## Escopo inicial
+# Escopo inicial
 
 Como entrega inicial da aplicação, desenvolveremos o back-end para a entidade Livro, com 4 APIs a serem consumidas pelo
 front.
@@ -22,6 +37,7 @@ Como simplificação, não faremos controle de estoque, nem guardaremos históri
 
 Nessa V0, o atributo `Autor` será substituído por `Autoria`, que guardará texto com os autores (pode haver mais de um, naturalmente).
 
+# APIs
 ## APIs de Livro
 
 Desenvolveremos os seguintes *endpoints*
