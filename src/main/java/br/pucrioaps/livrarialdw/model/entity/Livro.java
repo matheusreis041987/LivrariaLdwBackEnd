@@ -2,6 +2,7 @@ package br.pucrioaps.livrarialdw.model.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +31,11 @@ public class Livro {
     @Setter
     @Positive
     private BigDecimal precoVenda;
+
+    @PositiveOrZero
+    private Integer quantidade;
+
+    private byte[] capa;
 
     public Livro(String isbn, String titulo, String autoria, String editora,
                  Categoria categoria, BigDecimal precoVenda) {
