@@ -56,7 +56,9 @@ public class LivroControllerTest {
                         "Marco Tulio Valente",
                         "Independente",
                         Categoria.INFORMATICA,
-                        new BigDecimal("100.90")
+                        new BigDecimal("100.90"),
+                        1,
+                        null
                 )
         );
 
@@ -91,7 +93,9 @@ public class LivroControllerTest {
                         "Marco Tulio Valente",
                         "Independente",
                         Categoria.INFORMATICA,
-                        new BigDecimal("100.90")
+                        new BigDecimal("100.90"),
+                        1,
+                        null
                 )
         );
         this.mockMvc = MockMvcBuilders.standaloneSetup(
@@ -117,7 +121,8 @@ public class LivroControllerTest {
                         "Engenharia de Software Moderna",
                         "Marco Tulio Valente",
                         "INFORMATICA",
-                        new BigDecimal("100.90")
+                        new BigDecimal("100.90"),
+                        2
                         ))
         );
 
@@ -171,14 +176,16 @@ public class LivroControllerTest {
                         "Engenharia de Software Moderna",
                         "Marco Tulio Valente",
                         "INFORMATICA",
-                        new BigDecimal("100.90")
+                        new BigDecimal("100.90"),
+                        3
                 ),
                         new CabecalhoLivroDTO(
                                 2L,
                                 "Entrega Contínua",
                                 "Jez Humble, David Farley",
                                 "INFORMATICA",
-                                new BigDecimal("208.00")
+                                new BigDecimal("208.00"),
+                                1
                         ))
         );
 
@@ -225,7 +232,9 @@ public class LivroControllerTest {
                         "Marco Tulio Valente",
                         "Independente",
                         Categoria.INFORMATICA,
-                        new BigDecimal("100.90")
+                        new BigDecimal("100.90"),
+                        1,
+                        null
                 )
         );
 
@@ -239,7 +248,8 @@ public class LivroControllerTest {
                                                 " \"autoria\": \"Marco Tulio Valente\", " +
                                                 "\"editora\": \"Independente\", " +
                                                 "\"categoria\": \"INFORMATICA\"," +
-                                                " \"precoVenda\": 100.90}")
+                                                " \"precoVenda\": 100.90," +
+                                                " \"quantidade\": 1}" )
         )
             // Assert
                 .andExpect(status().isCreated())
@@ -308,7 +318,9 @@ public class LivroControllerTest {
                         "Marco Tulio Valente",
                         "Independente",
                         Categoria.INFORMATICA,
-                        new BigDecimal("100.90")
+                        new BigDecimal("100.90"),
+                        1,
+                        null
                 )
         );
 
@@ -366,7 +378,9 @@ public class LivroControllerTest {
                         "Marco Tulio Valente",
                         "Independente",
                         Categoria.INFORMATICA,
-                        new BigDecimal("100.90")
+                        new BigDecimal("100.90"),
+                        1,
+                        null
                 )
         );
 
@@ -392,7 +406,8 @@ public class LivroControllerTest {
                         "Engenharia de Software Moderna",
                         "Marco Tulio Valente",
                         "INFORMATICA",
-                        new BigDecimal("100.90")
+                        new BigDecimal("100.90"),
+                        3
                 ))
         );
 
@@ -428,7 +443,8 @@ public class LivroControllerTest {
                         "Engenharia de Software Moderna",
                         "Marco Tulio Valente",
                         "INFORMATICA",
-                        new BigDecimal("100.90")
+                        new BigDecimal("100.90"),
+                        11
                 ))
         );
 

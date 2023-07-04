@@ -18,10 +18,16 @@ public record CadastroDeLivroDTO(
         @NotBlank(message = "informar categoria válida")
         String categoria,
         @NotNull(message = "preço de venda obrigatório")
-        BigDecimal precoVenda
+        BigDecimal precoVenda,
+        @NotNull(message = "quantidade obrigatória")
+        Integer quantidade,
+        byte[] capa
+
+
 ) {
     public Livro toLivro() {
         return new Livro(isbn(), titulo(), autoria(), editora(),
-                Categoria.valueOf(categoria()), precoVenda());
+                Categoria.valueOf(categoria()), precoVenda(),
+                quantidade(), capa());
     }
 }

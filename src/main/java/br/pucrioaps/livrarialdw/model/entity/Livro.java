@@ -32,19 +32,22 @@ public class Livro {
     @Positive
     private BigDecimal precoVenda;
 
-    @PositiveOrZero
+    @Positive
     private Integer quantidade;
 
     private byte[] capa;
 
     public Livro(String isbn, String titulo, String autoria, String editora,
-                 Categoria categoria, BigDecimal precoVenda) {
+                 Categoria categoria, BigDecimal precoVenda, Integer quantidade,
+                 byte[] capa) {
         this.isbn = isbn;
         this.titulo = titulo;
         this.autoria = autoria;
         this.editora = editora;
         this.categoria = categoria;
         this.precoVenda = precoVenda;
+        this.quantidade = quantidade;
+        this.capa = capa;
     }
 
     public Livro(String isbn, String titulo, String autoria, String editora,
