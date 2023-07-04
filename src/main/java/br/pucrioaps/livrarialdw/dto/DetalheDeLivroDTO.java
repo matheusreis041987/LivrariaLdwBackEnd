@@ -12,16 +12,20 @@ public record DetalheDeLivroDTO(
         String autoria,
         String editora,
         String categoria,
-        BigDecimal precoVenda) {
+        BigDecimal precoVenda,
+        int quantidade,
+        byte[] capa) {
 
     public DetalheDeLivroDTO(Livro livro){
         this(livro.getId(), livro.getIsbn(), livro.getTitulo(), livro.getAutoria(),
-                livro.getEditora(), livro.getCategoria().toString(), livro.getPrecoVenda());
+                livro.getEditora(), livro.getCategoria().toString(), livro.getPrecoVenda(),
+                livro.getQuantidade(), livro.getCapa());
     }
 
     public Livro toLivro() {
         return new Livro(
                 id(), isbn(), titulo(), autoria(),
-                editora(), Categoria.valueOf(categoria()), precoVenda());
+                editora(), Categoria.valueOf(categoria()), precoVenda(),
+                quantidade(), capa());
     }
 }

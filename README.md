@@ -8,10 +8,10 @@ LivrariaLdw
 * [Escopo inicial](#escopo-inicial)
 * [APIs](#apis)
   * [APIs de Livro](#apis-de-livro)
-    * [`/cadastrar_livro`](#cadastrarlivro)
+    * [`/cadastrar`](#cadastrar)
     * [`/atualizar_preco_de_venda`](#atualizarprecodevenda)
-    * [`/livros`](#livros)
-    * [`/livros/{id}`](#livrosid)
+    * [`/buscar`](#buscar)
+    * [`/detalhar/{id}`](#detalharid)
 <!-- TOC -->
 
 # Descrição
@@ -37,12 +37,14 @@ Como simplificação, não faremos controle de estoque, nem guardaremos históri
 
 Nessa V0, o atributo `Autor` será substituído por `Autoria`, que guardará texto com os autores (pode haver mais de um, naturalmente).
 
+Igualmente, colocaremos o atributo `quantidade` em `Livro`, em vez da entidade da modelagem original.
+
 # APIs
 ## APIs de Livro
 
-Desenvolveremos os seguintes *endpoints*
+A raiz de todos os *endpoints*, discrimandos abaixo, será `/api/livros`.
 
-### `/cadastrar_livro`
+### `/cadastrar`
 
 Expectativa de ser utilizado somente por usuários internos de nossa livraria, responsáveis pelo estoque.
 
@@ -55,7 +57,8 @@ Através dessa rota, cuja implementação se dará pelo método POST, o estoquis
   "autoria": "Marco Tulio Valente",
   "editora": "Independente",
   "categoria": "INFORMATICA",
-  "precoVenda": 100.90
+  "precoVenda": 100.90,
+  "quantidade": 1
 }
 ```
 
@@ -78,7 +81,7 @@ Se `id` inexistente, retornar que o recurso não foi encontrado.
 }
 ```
 
-### `/livros`
+### `/buscar`
 
 Esse endpoint pode ser utilizado tanto para clientes internos quanto externos.
 
@@ -94,7 +97,7 @@ Requisições usarão método GET, com possibilidade dos seguintes parâmetros (
 
 Pesquisas para `Autor`, `Titulo` e `Editora` devem considerar a possibilidade de *matches* parciais.
 
-### `/livros/{id}`
+### `/detalhar/{id}`
 
 Endpoint para detalhamento de um livro.
 
