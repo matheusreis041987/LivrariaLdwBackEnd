@@ -8,10 +8,10 @@ LivrariaLdw
 * [Escopo inicial](#escopo-inicial)
 * [APIs](#apis)
   * [APIs de Livro](#apis-de-livro)
-    * [`/cadastrar_livro`](#cadastrarlivro)
+    * [`/cadastrar`](#cadastrar)
     * [`/atualizar_preco_de_venda`](#atualizarprecodevenda)
-    * [`/livros`](#livros)
-    * [`/livros/{id}`](#livrosid)
+    * [`/buscar`](#buscar)
+    * [`/detalhar/{id}`](#detalharid)
 <!-- TOC -->
 
 # Descrição
