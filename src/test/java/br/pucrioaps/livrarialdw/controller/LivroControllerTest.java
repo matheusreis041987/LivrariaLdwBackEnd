@@ -33,6 +33,7 @@ import static org.mockito.Mockito.when;
 @WebMvcTest(LivroController.class)
 public class LivroControllerTest {
 
+    private String baseURL = "/api/livros";
     private PesquisaLivroDTO pesquisaSemFiltro =
             new PesquisaLivroDTO(null, null, null, null, null);
     @Autowired
@@ -63,7 +64,7 @@ public class LivroControllerTest {
         );
 
         // Act
-        this.mockMvc.perform(get("/livros/1"))
+        this.mockMvc.perform(get(baseURL + "/detalhar/1"))
                 // Assert
                 .andExpect(status().isOk())
                     .andExpect(jsonPath("$.isbn",
@@ -103,7 +104,7 @@ public class LivroControllerTest {
                 TratadorDeErros.class).build();
 
         // Act
-        this.mockMvc.perform(get("/livros/2"))
+        this.mockMvc.perform(get(baseURL + "/detalhar/2"))
 
                 // Assert
                 .andExpect(status().isNotFound());
@@ -128,7 +129,7 @@ public class LivroControllerTest {
 
 
         // Act
-        this.mockMvc.perform(get("/livros"))
+        this.mockMvc.perform(get(baseURL + "/buscar"))
                 // Assert
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$",
@@ -156,7 +157,7 @@ public class LivroControllerTest {
 
 
         // Act
-        this.mockMvc.perform(get("/livros"))
+        this.mockMvc.perform(get(baseURL + "/buscar"))
                 // Assert
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$",
@@ -191,7 +192,7 @@ public class LivroControllerTest {
 
 
         // Act
-        this.mockMvc.perform(get("/livros"))
+        this.mockMvc.perform(get(baseURL + "/buscar"))
                 // Assert
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$",
@@ -240,7 +241,7 @@ public class LivroControllerTest {
 
         // Arrange/Act
         this.mockMvc.perform(
-                        post("/cadastrar_livro")
+                        post(baseURL + "/cadastrar")
                         .contentType(MediaType.APPLICATION_JSON)
                                 .content(
                                         "{\"isbn\": \"9786500019506\", " +
@@ -267,7 +268,7 @@ public class LivroControllerTest {
 
         // Arrange/Act
         this.mockMvc.perform(
-                        post("/cadastrar_livro")
+                        post(baseURL + "/cadastrar")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(
                                         "{\"isbn\": \"9786500019506\", " +
@@ -291,7 +292,7 @@ public class LivroControllerTest {
 
         // Arrange/Act
         this.mockMvc.perform(
-                        post("/cadastrar_livro")
+                        post(baseURL + "/cadastrar")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(
                                         "{\"isbn\": \"9786500019506\", " +
@@ -326,7 +327,7 @@ public class LivroControllerTest {
 
         // Arrange/Act
         this.mockMvc.perform(
-                        put("/atualizar_preco_venda")
+                        put(baseURL + "/atualizar_preco_venda")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content("{\"id\": 1, \"precoVenda\": 102.00}")
                 )
@@ -356,7 +357,7 @@ public class LivroControllerTest {
 
         // Arrange/Act
         this.mockMvc.perform(
-                        put("/atualizar_preco_venda")
+                        put(baseURL + "/atualizar_preco_venda")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content("{\"id\": 2, \"precoVenda\": 102.00}")
                 )
@@ -386,7 +387,7 @@ public class LivroControllerTest {
 
         // Arrange/Act
         this.mockMvc.perform(
-                        put("/atualizar_preco_venda")
+                        put(baseURL + "/atualizar_preco_venda")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content("{\"id\": 1, \"precoVenda\": -0.01}")
                 )
@@ -413,7 +414,7 @@ public class LivroControllerTest {
 
 
         // Act
-        this.mockMvc.perform(get("/livros").param("categoria", "INFORMATICA"))
+        this.mockMvc.perform(get(baseURL + "/buscar").param("categoria", "INFORMATICA"))
                 // Assert
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$",
@@ -450,7 +451,7 @@ public class LivroControllerTest {
 
 
         // Act
-        this.mockMvc.perform(get("/livros").param("isbn", "123"))
+        this.mockMvc.perform(get(baseURL + "/buscar").param("isbn", "123"))
                 // Assert
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$",
