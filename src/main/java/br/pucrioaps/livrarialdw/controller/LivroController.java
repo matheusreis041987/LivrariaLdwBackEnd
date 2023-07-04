@@ -12,12 +12,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
+@RequestMapping("/api/livros")
 public class LivroController {
 
     @Autowired
     private LivroService service;
 
-    @GetMapping("/livros/{id}")
+    @GetMapping("/detalhar/{id}")
     public ResponseEntity detalhar(
             @PathVariable Long id
     ){
@@ -25,7 +26,7 @@ public class LivroController {
         return ResponseEntity.ok(dto);
     }
 
-    @GetMapping("/livros")
+    @GetMapping("/buscar")
     public ResponseEntity listar(
             @RequestParam(value = "isbn", required = false) String isbn,
             @RequestParam(value = "titulo", required = false) String titulo,
@@ -38,7 +39,7 @@ public class LivroController {
         return ResponseEntity.ok(dto);
     }
 
-    @PostMapping("/cadastrar_livro")
+    @PostMapping("/cadastrar")
     @Transactional
     public ResponseEntity cadastrar(
             @RequestBody @Valid CadastroDeLivroDTO dto,
