@@ -5,6 +5,7 @@
 -- e do schema livraria;
 
 -- criação de sequência para incremento do id
+SET search_path TO livraria;
 create sequence log_livro_id_seq;
 create sequence livro_identificador;
 
